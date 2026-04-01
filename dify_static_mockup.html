@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dify テスト用チャットボット構成</title>
+  <style>
+    :root{
+      --bg:#f1f5f9;
+      --surface:#ffffff;
+      --surface-2:#f8fafc;
+      --text:#0f172a;
+      --muted:#475569;
+      --line:#e2e8f0;
+      --green-bg:#ecfdf5; --green-line:#bbf7d0;
+      --blue-bg:#eff6ff; --blue-line:#bfdbfe;
+      --amber-bg:#fffbeb; --amber-line:#fde68a;
+      --slate-bg:#f8fafc; --slate-line:#cbd5e1;
+      --shadow:0 10px 30px rgba(15,23,42,.06);
+      --radius:28px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1240px;margin:0 auto;padding:32px 24px 64px}
+    .hero,.slide{background:var(--surface);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow)}
+    .hero{padding:32px;margin-bottom:32px}
+    .hero-top{display:flex;gap:24px;justify-content:space-between;align-items:flex-end;flex-wrap:wrap}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--green-bg);border:1px solid var(--green-line);font-size:12px;font-weight:700;color:#047857}
+    .hero h1{margin:16px 0 0;font-size:42px;line-height:1.12;letter-spacing:-.02em}
+    .stats{display:grid;grid-template-columns:repeat(3,minmax(170px,1fr));gap:12px}
+    .stat{background:var(--surface-2);border:1px solid var(--line);border-radius:18px;padding:14px 16px}
+    .stat .k{font-size:12px;color:#64748b}
+    .stat .v{margin-top:4px;font-size:14px;font-weight:700}
+    .slides{display:flex;flex-direction:column;gap:28px}
+    .slide-header{padding:24px 32px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+    .slide-header h2{margin:0;font-size:30px;line-height:1.2}
+    .slide-header p{margin:10px 0 0;color:#64748b;font-size:14px;max-width:980px}
+    .slide-body{padding:32px}
+    .grid-2,.grid-3{display:grid;gap:16px}
+    .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .cards-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+    .card{border-radius:24px;border:1px solid var(--line);padding:20px}
+    .tone-green{background:var(--green-bg);border-color:var(--green-line)}
+    .tone-blue{background:var(--blue-bg);border-color:var(--blue-line)}
+    .tone-amber{background:var(--amber-bg);border-color:var(--amber-line)}
+    .tone-slate{background:var(--slate-bg);border-color:var(--slate-line)}
+    .card-title{font-size:15px;font-weight:800;margin:0 0 10px}
+    ul{margin:0;padding:0;list-style:none}
+    li{position:relative;padding-left:16px;color:#334155;font-size:14px;line-height:1.7;margin:6px 0}
+    li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:999px;background:#94a3b8}
+    .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
+    .link-card{display:block;border:1px solid var(--line);background:#fff;border-radius:24px;padding:18px;transition:.2s transform,.2s box-shadow}
+    .link-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+    .link-title{font-size:14px;font-weight:800}
+    .link-url{margin-top:6px;font-size:12px;color:#64748b;word-break:break-all}
+    .flow{display:grid;grid-template-columns:1.15fr 72px 1.15fr 72px 1.15fr 72px 1.15fr;gap:10px;align-items:stretch;margin-top:20px}
+    .flow-node,.flow-arrow{display:flex;align-items:center;justify-content:center}
+    .flow-node{border-radius:20px;border:1px solid var(--line);background:var(--surface-2);padding:18px;text-align:center;font-size:14px;font-weight:700}
+    .flow-arrow{font-size:28px;color:#94a3b8}
+    .prompt-wrap{display:grid;grid-template-columns:1fr 1.25fr;gap:16px}
+    .prompt-box{background:#020617;color:#e2e8f0;border:1px solid #1e293b;border-radius:24px;padding:20px}
+    .prompt-box .cap{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#94a3b8;margin-bottom:10px}
+    pre{margin:0;white-space:pre-wrap;word-break:break-word;font-size:12px;line-height:1.75;font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;max-height:900px;overflow:auto}
+    .note{margin-top:16px;padding:16px 18px;border-radius:20px;background:var(--surface-2);border:1px solid var(--line);font-size:14px;color:#475569}
+    @media (max-width: 1100px){
+      .cards-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .flow{grid-template-columns:1fr;gap:8px}
+      .flow-arrow{transform:rotate(90deg);min-height:28px}
+      .prompt-wrap,.grid-3,.links,.grid-2,.stats{grid-template-columns:1fr}
+    }
+    @media (max-width: 720px){
+      .wrap{padding:18px 14px 42px}
+      .hero,.slide{border-radius:24px}
+      .hero{padding:20px}
+      .hero h1{font-size:30px}
+      .slide-header,.slide-body{padding:20px}
+      .slide-header h2{font-size:24px}
+      .cards-4{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="pill">Dify 社内共有資料</div>
+          <h1>テスト用チャットボット構成</h1>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="k">現行環境</div><div class="v">さくらVPS 2GB</div></div>
+          <div class="stat"><div class="k">アプリ種別</div><div class="v">Chatbot</div></div>
+          <div class="stat"><div class="k">使用中のLLM</div><div class="v">Gemini 2.5 Flash</div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="slides">
+      <section class="slide">
+        <div class="slide-header">
+          <h2>1. 現在の構成と推奨移行先</h2>
+          <p>現在、テスト用の Dify は Sakura VPS 2GB 上で稼働しており、同一サーバー上で WordPress も proxy ポート経由で動作しています。Dify に対してこの構成は余裕が少ないため、サーバー負荷が発生しやすい状態です。今後は ConoHa VPS または Dify 専用のより余裕あるサーバーへの移行が推奨です。</p>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="card tone-blue">
+              <div class="card-title">現在の構成</div>
+              <ul>
+                <li>テスト用 Dify は Sakura VPS 上で稼働</li>
+                <li>VPS 構成は 2GB RAM</li>
+                <li>同一サーバー上で WordPress も稼働</li>
+                <li>WordPress は proxy ポート経由で公開</li>
+              </ul>
+            </div>
+            <div class="card tone-amber">
+              <div class="card-title">負荷が発生した理由</div>
+              <ul>
+                <li>Dify は Docker ベースで複数サービスを利用する</li>
+                <li>Dify 単体でも最低 4GB RAM 程度は必要になりやすい</li>
+                <li>2GB 構成で WordPress と同居しているため余裕が少ない</li>
+                <li>そのためテスト環境でサーバー負荷が発生した</li>
+              </ul>
+            </div>
+            <div class="card tone-green">
+              <div class="card-title">推奨方針</div>
+              <ul>
+                <li>Dify はできるだけ専用サーバーに分離する</li>
+                <li>次の移行先として ConoHa VPS を推奨</li>
+                <li>Sakura / ConoHa ともに Dify 用 startup script がある</li>
+                <li>実運用では 8GB 以上を目安にしたい</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-top:16px;">
+            <div class="card tone-slate">
+              <div class="card-title">サーバーに必要な基本要素</div>
+              <ul>
+                <li>Linux（一般的には Ubuntu）</li>
+                <li>Docker / Docker Compose</li>
+                <li>Dify 本体と関連コンテナ</li>
+                <li>80 / 443 ポートの開放</li>
+                <li>ドメインまたは hostname</li>
+                <li>HTTPS 設定</li>
+              </ul>
+            </div>
+            <div class="card tone-blue">
+              <div class="card-title">参考リンク</div>
+              <ul>
+                <li>Sakura: Dify 用 startup script</li>
+                <li>ConoHa: Dify 用 startup script</li>
+                <li>Dify: self-host 公式ドキュメント</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="links">
+            <a class="link-card" href="https://manual.sakura.ad.jp/vps/startupscript/dify.html" target="_blank" rel="noreferrer">
+              <div class="link-title">Sakura VPS: Dify startup script</div>
+              <div class="link-url">manual.sakura.ad.jp/vps/startupscript/dify.html</div>
+            </a>
+            <a class="link-card" href="https://doc.conoha.jp/products/vps-v3/startupscripts-v3/dify/" target="_blank" rel="noreferrer">
+              <div class="link-title">ConoHa VPS: Dify startup script</div>
+              <div class="link-url">doc.conoha.jp/products/vps-v3/startupscripts-v3/dify/</div>
+            </a>
+            <a class="link-card" href="https://docs.dify.ai/getting-started/install-self-hosted/docker-compose" target="_blank" rel="noreferrer">
+              <div class="link-title">Dify: self-host with Docker Compose</div>
+              <div class="link-url">docs.dify.ai/getting-started/install-self-hosted/docker-compose</div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header">
+          <h2>2. Dify のアプリ種別</h2>
+          <p>現在は Chatbot を利用しています。今後、要件が複雑になった場合は Chatflow や Agent へ拡張することが可能です。</p>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="card tone-green">
+              <div class="card-title">現在: Chatbot</div>
+              <ul>
+                <li>標準的な対話型チャットボット</li>
+                <li>サイト情報や knowledge base を参照した回答に向く</li>
+                <li>FAQ、簡易案内、サービス導線に適している</li>
+              </ul>
+            </div>
+            <div class="card tone-blue">
+              <div class="card-title">拡張候補: Chatflow</div>
+              <ul>
+                <li>分岐を含むステップ型の会話設計が可能</li>
+                <li>1〜2問の確認質問で要件を絞り込める</li>
+                <li>サービス振り分け、フォーム誘導、条件分岐に向く</li>
+              </ul>
+            </div>
+            <div class="card tone-amber">
+              <div class="card-title">拡張候補: Agent</div>
+              <ul>
+                <li>外部ツールや API を利用した処理が可能</li>
+                <li>複数データソース検索やルールベース処理に対応しやすい</li>
+                <li>より高度な自動化シナリオに向く</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header">
+          <h2>3. 使用中の LLM</h2>
+          <p>テスト環境のチャットボットでは Gemini 2.5 Flash を使用しています。短い回答、FAQ、knowledge base 参照を前提とした用途に対して、速度とコストのバランスが良い選択です。要件が複雑になった場合は別モデルの利用も検討できます。</p>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="card tone-green">
+              <div class="card-title">現在のモデル</div>
+              <ul>
+                <li>Gemini 2.5 Flash</li>
+                <li>高速応答とコスト効率を重視した構成</li>
+                <li>サイト案内・FAQ・knowledge base 参照に適している</li>
+              </ul>
+            </div>
+            <div class="card tone-blue">
+              <div class="card-title">要件が複雑になった場合の候補</div>
+              <ul>
+                <li>Gemini 2.5 Pro: より高度な分析や推論が必要な場合</li>
+                <li>GPT-4.1: 厳密な指示追従や統合処理を重視する場合</li>
+                <li>Claude Sonnet 4: 説明品質や文章品質を重視する場合</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header">
+          <h2>4. 現在の接続構成</h2>
+          <p>現在は Notion を knowledge source として利用しています。今後は他のファイルソースや業務用ドキュメントも追加可能です。</p>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="card tone-green">
+              <div class="card-title">現在接続しているもの</div>
+              <ul>
+                <li>Notion</li>
+                <li>Dify 内 Dataset への同期</li>
+                <li>Chatbot から retrieval で参照</li>
+              </ul>
+            </div>
+            <div class="card tone-blue">
+              <div class="card-title">基本フロー</div>
+              <ul>
+                <li>Notion → Dify Dataset</li>
+                <li>チャンク分割とインデックス化</li>
+                <li>取得したコンテキストに基づいて回答</li>
+              </ul>
+            </div>
+            <div class="card tone-amber">
+              <div class="card-title">今後追加できるもの</div>
+              <ul>
+                <li>Google Drive 上のドキュメント</li>
+                <li>PDF / Word / Excel ファイル</li>
+                <li>料金表、サービス一覧、FAQ、事例資料など</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="flow">
+            <div class="flow-node">Notion / 各種ドキュメント</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Dify Dataset</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">チャンク / インデックス</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Chatbot Retrieval</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header">
+          <h2>5. プロンプト設定</h2>
+          <p>チャットボットの基本挙動は system prompt で制御しています。短く自然な案内、確認できる情報のみの利用、必要時のみ問い合わせフォームまたは電話へ誘導する方針です。</p>
+        </div>
+        <div class="slide-body">
+          <div class="prompt-wrap">
+            <div>
+              <div class="card tone-green">
+                <div class="card-title">主要設定</div>
+                <ul>
+                  <li>役割: サイト訪問者向け案内チャットボット</li>
+                  <li>言語: 丁寧で自然な日本語</li>
+                  <li>回答長: 原則 1〜3 文</li>
+                  <li>回答根拠: context とサイト掲載情報のみ</li>
+                </ul>
+              </div>
+              <div class="card tone-blue" style="margin-top:16px;">
+                <div class="card-title">回答方針</div>
+                <ul>
+                  <li>結論を先に短く案内する</li>
+                  <li>不要な繰り返しや長い箇条書きを避ける</li>
+                  <li>意図が把握できたら深掘りしすぎない</li>
+                  <li>必要時のみフォームまたは 098-975-5390 へ案内する</li>
+                </ul>
+              </div>
+              <div class="card tone-amber" style="margin-top:16px;">
+                <div class="card-title">実務上の意味</div>
+                <ul>
+                  <li>コンテキスト外の情報を勝手に補完しない</li>
+                  <li>サイト向けに短く読みやすい回答を維持する</li>
+                  <li>長く曖昧な回答を抑制しやすい</li>
+                </ul>
+              </div>
+            </div>
+            <div class="prompt-box">
+              <div class="cap">Current system prompt</div>
+              <pre>あなたは、自社サイトをご訪問中のお客様向け案内チャットボットです。
+企業サイトにふさわしい、丁寧で親しみやすい自然な日本語で、短くわかりやすく回答してください。
+
+【最重要ルール】
+・毎回、結論から短く案内する
+・回答は原則1〜3文、長くても4文まで
+・1文はできるだけ短くし、同じ内容を言い換えて繰り返さない
+・長い箇条書きは作らない
+・サービス一覧を出す場合も、最大3項目までに要約する
+・案内に必要な情報だけを伝え、説明を広げすぎない
+・質問より案内を優先する
+・会話を不必要に長引かせない
+・確認質問は必要な場合のみ、1回答につき1つまで
+・毎回質問で終わらせない
+
+【情報の扱い】
+・回答は、context とサイト掲載情報で確認できる内容だけを使う
+・context やサイト掲載情報で確認できない内容は推測で補わない
+・不確かな情報は断定しない
+・内部情報、JSON、ラベル、記号、true / false などは出力しない
+・ユーザーにそのまま表示できる自然な完成文だけを出力する
+
+【回答スタイル】
+・簡潔だが、案内として成立する情報量は保つ
+・ただし、説明を増やしすぎて長文化しない
+・無機質な箇条書きの連続は避ける
+・必要に応じて改行は使ってよいが、読みやすさを優先する
+・1回答で伝える要点は多くても2つまでを目安にする
+
+【返答パターンの優先ルール】
+回答は、現在の会話段階に応じて出し分ける
+
+■ 概要案内・初期案内の段階
+・ユーザーがサービス全体を知りたい段階、または相談内容がまだ大まかな段階では、まず簡潔に案内する
+・この段階では、原則としてお問い合わせフォームやお電話への誘導を急がない
+・必要な場合のみ、確認質問を1つだけ添える
+・この段階の目的は、ユーザーの関心や相談テーマを自然に絞ること
+
+■ 相談内容が概ね把握できている段階
+・ユーザーの希望するサービスや相談テーマがある程度特定できた場合は、深掘り質問を続けない
+・まず理解を示し、相談内容を短く言い換える
+・そのうえで、詳しい案内はお問い合わせフォームまたはお電話（098-975-5390）で対応可能と伝える
+・必要であれば、このチャットでも引き続き質問できることを短く添える
+
+【サービス全体について聞かれた場合】
+・「サービス内容について知りたい」など全体概要の質問には、主な内容を3つ以内に整理して案内する
+・サービス名を大量に列挙しない
+・各項目に短い説明を添えて自然な文章にする
+・細かい要件確認を急がない
+・最後に必要な場合のみ、「どのサービスにご興味がありますか」などの質問を1つだけ添える
+
+【相談内容が概ね把握できている場合】
+・ユーザーの希望がだいたい分かる場合は、それ以上深掘り質問を続けない
+・まず理解を示し、相談内容を1文で簡潔に言い換える
+・そのうえで、詳しくはお問い合わせフォームまたはお電話（098-975-5390）で案内可能と伝える
+・必要であれば「このチャットでもご質問いただけます」と短く添える
+・この場合、説明を増やしすぎない
+
+【相談内容がまだ十分に把握できていない場合】
+・まず案内可能な内容を短く伝える
+・その後、必要最小限の確認質問を1つだけ添える
+・質問だけで終わらせず、必ず案内を含める
+・質問は具体的に1つだけに絞る
+
+【料金案内ルール】
+・ユーザーが料金、費用、見積り、予算、相場について明示的に尋ねた場合のみ金額に触れる
+・料金を案内する場合も、1〜2文で簡潔に伝える
+・金額は「約○円〜○円」「○万円台」など参考範囲で示す
+・内容や条件により変動することを必ず添える
+・料金説明を長くしすぎない
+・詳しくはお問い合わせフォームまたはお電話（098-975-5390）で案内可能と自然につなげる
+
+【電話案内ルール】
+・電話での案内に触れる場合は、電話番号「098-975-5390」を必ず記載する
+・電話番号は省略しない
+・表記は必ず「098-975-5390」を使用する
+
+【禁止事項】
+・context やサイト掲載情報にない内容を推測で補わない
+・不確かな情報を断定しない
+・不要に長く説明しない
+・同じ趣旨の表現を繰り返さない
+・長い箇条書きを出さない
+・毎回必ず質問で終わらない
+・会話を無理に長引かせない
+
+【出力前チェック】
+出力前に必ず次を満たすこと
+・3〜4文以内に収まっているか
+・案内が先で、説明過多になっていないか
+・サービス一覧が3項目を超えていないか
+・最後が毎回質問になっていないか
+・お問い合わせフォームまたはお電話（098-975-5390）への導線が必要な場面で入っているか</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header">
+          <h2>6. Dify のサイト埋め込み方法</h2>
+          <p>主な方法は iframe と API の 2 つです。テスト環境では、より自由度の高い API 方式を採用しています。</p>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="card tone-blue">
+              <div class="card-title">iframe</div>
+              <ul>
+                <li>最もシンプルで導入が早い</li>
+                <li>Dify 標準 UI をそのまま利用する場合に向く</li>
+                <li>サイト側の開発工数を抑えやすい</li>
+              </ul>
+            </div>
+            <div class="card tone-green">
+              <div class="card-title">API</div>
+              <ul>
+                <li>デザインや挙動の自由度が高い</li>
+                <li>PHP / WordPress を含むサイト backend から実装可能</li>
+                <li>現在のテスト環境ではこの方式を採用している</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header">
+          <h2>7. API 連携に必要なサイト要件</h2>
+          <p>API 方式を使う場合、サイト側には server-side の処理が必要です。必ずしも別 VPS である必要はありませんが、PHP / WordPress などでサーバー側のリクエスト処理を実装できることが前提になります。</p>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="card tone-blue">
+              <div class="card-title">必要なもの</div>
+              <ul>
+                <li>サーバーサイド処理があるサイト環境</li>
+                <li>PHP / WordPress / Node.js / Python などの backend</li>
+                <li>API key を安全に保持できるサーバー側管理</li>
+              </ul>
+            </div>
+            <div class="card tone-green">
+              <div class="card-title">動作の流れ</div>
+              <ul>
+                <li>ユーザーがサイト上のチャットに入力する</li>
+                <li>サイト backend がその内容を受け取る</li>
+                <li>backend が Dify API に送信し、結果を返す</li>
+              </ul>
+            </div>
+            <div class="card tone-amber">
+              <div class="card-title">要点</div>
+              <ul>
+                <li>静的サイトのみでは API 方式は扱いにくい</li>
+                <li>サーバー側のリクエスト処理が必要</li>
+                <li>API key を front に置かないことが重要</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header">
+          <h2>8. 今後追加できる要素</h2>
+          <p>基本的なチャット機能に加えて、運用面や knowledge 拡張、将来のシナリオ拡張も検討可能です。</p>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="card tone-blue"><div class="card-title">公開範囲と制限</div>チャットボット自体へのアクセス制御、リクエスト制限、スパム対策などを追加できる。</div>
+            <div class="card tone-green"><div class="card-title">ログと監視</div>会話ログ、エラー、遅延、トークン消費などの監視基盤を整備できる。</div>
+            <div class="card tone-amber"><div class="card-title">knowledge 拡張</div>Google Drive、料金表、FAQ、PDF、事例資料、社内文書などを追加できる。</div>
+            <div class="card tone-slate"><div class="card-title">モデル運用</div>予備モデル、用途別モデル切り替え、コスト管理を設計できる。</div>
+            <div class="card tone-slate"><div class="card-title">シナリオ拡張</div>Chatflow 化、フォーム連携、問い合わせ振り分け、外部 API 連携へ発展できる。</div>
+            <div class="card tone-slate"><div class="card-title">インターフェース</div>出典表示は意図的に非表示。初期導線のクイックボタンはすでに実装済みで、必要に応じて評価導線やフォーム遷移ボタンを追加できる。</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header">
+          <h2>9. サイトと Dify の配置方針</h2>
+          <p>安定運用を考えると、サイト用サーバーと Dify 用サーバーは分ける方が望ましいです。同居も可能ですが、十分なリソース余裕が必要です。</p>
+        </div>
+        <div class="slide-body">
+          <div class="grid-2">
+            <div class="card tone-green">
+              <div class="card-title">推奨: 分離構成</div>
+              <ul>
+                <li>サイトと Dify が CPU / RAM を奪い合いにくい</li>
+                <li>個別に更新・再起動しやすい</li>
+                <li>チャット側の負荷が本体サイトへ波及しにくい</li>
+              </ul>
+            </div>
+            <div class="card tone-amber">
+              <div class="card-title">同居構成の場合</div>
+              <ul>
+                <li>より高いスペックの VPS が必要</li>
+                <li>WordPress と実トラフィックがある場合は特に余裕が必要</li>
+                <li>低スペック構成ではすぐにボトルネック化しやすい</li>
+              </ul>
+            </div>
+          </div>
+          <div class="note">この HTML は単体で動作する static page です。React / Vite / Tailwind のビルドは不要で、そのままホスティングして Notion の /embed で利用できます。</div>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
