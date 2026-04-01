@@ -10,17 +10,15 @@
       --surface:#ffffff;
       --surface-2:#f8fafc;
       --text:#0f172a;
-      --muted:#475569;
       --line:#e2e8f0;
       --green-bg:#ecfdf5; --green-line:#bbf7d0;
       --blue-bg:#eff6ff; --blue-line:#bfdbfe;
       --amber-bg:#fffbeb; --amber-line:#fde68a;
       --slate-bg:#f8fafc; --slate-line:#cbd5e1;
       --shadow:0 10px 30px rgba(15,23,42,.06);
-      --radius:28px;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;line-height:1.6}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;line-height:1.6}
     a{color:inherit;text-decoration:none}
     .wrap{max-width:1240px;margin:0 auto;padding:32px 24px 64px}
     .hero,.slide{background:var(--surface);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow)}
@@ -40,7 +38,6 @@
     .grid-2,.grid-3{display:grid;gap:16px}
     .grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
     .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .cards-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
     .card{border-radius:24px;border:1px solid var(--line);padding:20px}
     .tone-green{background:var(--green-bg);border-color:var(--green-line)}
     .tone-blue{background:var(--blue-bg);border-color:var(--blue-line)}
@@ -50,11 +47,6 @@
     ul{margin:0;padding:0;list-style:none}
     li{position:relative;padding-left:16px;color:#334155;font-size:14px;line-height:1.7;margin:6px 0}
     li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:999px;background:#94a3b8}
-    .links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:20px}
-    .link-card{display:block;border:1px solid var(--line);background:#fff;border-radius:24px;padding:18px;transition:.2s transform,.2s box-shadow}
-    .link-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-    .link-title{font-size:14px;font-weight:800}
-    .link-url{margin-top:6px;font-size:12px;color:#64748b;word-break:break-all}
     .flow{display:grid;grid-template-columns:1.15fr 72px 1.15fr 72px 1.15fr 72px 1.15fr;gap:10px;align-items:stretch;margin-top:20px}
     .flow-node,.flow-arrow{display:flex;align-items:center;justify-content:center}
     .flow-node{border-radius:20px;border:1px solid var(--line);background:var(--surface-2);padding:18px;text-align:center;font-size:14px;font-weight:700}
@@ -62,13 +54,16 @@
     .prompt-wrap{display:grid;grid-template-columns:1fr 1.25fr;gap:16px}
     .prompt-box{background:#020617;color:#e2e8f0;border:1px solid #1e293b;border-radius:24px;padding:20px}
     .prompt-box .cap{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#94a3b8;margin-bottom:10px}
-    pre{margin:0;white-space:pre-wrap;word-break:break-word;font-size:12px;line-height:1.75;font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;max-height:900px;overflow:auto}
-    .note{margin-top:16px;padding:16px 18px;border-radius:20px;background:var(--surface-2);border:1px solid var(--line);font-size:14px;color:#475569}
+    pre{margin:0;white-space:pre-wrap;word-break:break-word;font-size:12px;line-height:1.75;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;max-height:900px;overflow:auto}
+    .link-stack{display:flex;flex-direction:column;gap:12px}
+    .link-card{display:block;border:1px solid #bfdbfe;background:#fff;border-radius:18px;padding:14px 16px;transition:.2s transform,.2s box-shadow}
+    .link-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+    .link-title{font-size:14px;font-weight:800}
+    .link-url{margin-top:4px;font-size:12px;color:#64748b;word-break:break-all}
     @media (max-width: 1100px){
-      .cards-4{grid-template-columns:repeat(2,minmax(0,1fr))}
       .flow{grid-template-columns:1fr;gap:8px}
       .flow-arrow{transform:rotate(90deg);min-height:28px}
-      .prompt-wrap,.grid-3,.links,.grid-2,.stats{grid-template-columns:1fr}
+      .prompt-wrap,.grid-3,.grid-2,.stats{grid-template-columns:1fr}
     }
     @media (max-width: 720px){
       .wrap{padding:18px 14px 42px}
@@ -77,7 +72,6 @@
       .hero h1{font-size:30px}
       .slide-header,.slide-body{padding:20px}
       .slide-header h2{font-size:24px}
-      .cards-4{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -148,27 +142,21 @@
             </div>
             <div class="card tone-blue">
               <div class="card-title">参考リンク</div>
-              <ul>
-                <li>Sakura: Dify 用 startup script</li>
-                <li>XServer: Dify アプリイメージ</li>
-                <li>Dify: self-host 公式ドキュメント</li>
-              </ul>
+              <div class="link-stack">
+                <a class="link-card" href="https://manual.sakura.ad.jp/vps/startupscript/dify.html" target="_blank" rel="noreferrer">
+                  <div class="link-title">Sakura VPS: Dify startup script</div>
+                  <div class="link-url">manual.sakura.ad.jp/vps/startupscript/dify.html</div>
+                </a>
+                <a class="link-card" href="https://vps.xserver.ne.jp/dify.php" target="_blank" rel="noreferrer">
+                  <div class="link-title">XServer VPS: Dify アプリイメージ</div>
+                  <div class="link-url">vps.xserver.ne.jp/dify.php</div>
+                </a>
+                <a class="link-card" href="https://docs.dify.ai/getting-started/install-self-hosted/docker-compose" target="_blank" rel="noreferrer">
+                  <div class="link-title">Dify: self-host 公式ドキュメント</div>
+                  <div class="link-url">docs.dify.ai/getting-started/install-self-hosted/docker-compose</div>
+                </a>
+              </div>
             </div>
-          </div>
-
-          <div class="links">
-            <a class="link-card" href="https://manual.sakura.ad.jp/vps/startupscript/dify.html" target="_blank" rel="noreferrer">
-              <div class="link-title">Sakura VPS: Dify startup script</div>
-              <div class="link-url">manual.sakura.ad.jp/vps/startupscript/dify.html</div>
-            </a>
-            <a class="link-card" href="https://vps.xserver.ne.jp/dify.php" target="_blank" rel="noreferrer">
-              <div class="link-title">XServer VPS: Dify アプリイメージ</div>
-              <div class="link-url">vps.xserver.ne.jp/dify.php</div>
-            </a>
-            <a class="link-card" href="https://docs.dify.ai/getting-started/install-self-hosted/docker-compose" target="_blank" rel="noreferrer">
-              <div class="link-title">Dify: self-host with Docker Compose</div>
-              <div class="link-url">docs.dify.ai/getting-started/install-self-hosted/docker-compose</div>
-            </a>
           </div>
         </div>
       </section>
@@ -518,7 +506,6 @@
               </ul>
             </div>
           </div>
-          <div class="note">この HTML は単体で動作する static page です。React / Vite / Tailwind のビルドは不要で、そのままホスティングして Notion の /embed で利用できます。</div>
         </div>
       </section>
     </div>
