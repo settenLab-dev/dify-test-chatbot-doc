@@ -101,7 +101,7 @@
       <section class="slide">
         <div class="slide-header">
           <h2>1. 現在の構成と推奨移行先</h2>
-          <p>現在、テスト用の Dify は Sakura VPS 2GB 上で稼働しており、同一サーバー上で WordPress も proxy ポート経由で動作しています。Dify に対してこの構成は余裕が少ないため、サーバー負荷が発生しやすい状態です。今後は ConoHa VPS または Dify 専用のより余裕あるサーバーへの移行が推奨です。</p>
+          <p>現在、テスト用の Dify は Sakura VPS 2GB 上で稼働しており、同一サーバー上で WordPress も proxy ポート経由で動作しています。Dify に対してこの構成は余裕が少ないため、サーバー負荷が発生しやすい状態です。今後は XServer VPS または Dify 専用のより余裕あるサーバーへの移行が推奨です。</p>
         </div>
         <div class="slide-body">
           <div class="grid-3">
@@ -118,7 +118,7 @@
               <div class="card-title">負荷が発生した理由</div>
               <ul>
                 <li>Dify は Docker ベースで複数サービスを利用する</li>
-                <li>Dify 単体でも最低 4GB RAM 程度は必要になりやすい</li>
+                <li>現在の 2GB 構成では Dify と WordPress の同居に余裕が少ない</li>
                 <li>2GB 構成で WordPress と同居しているため余裕が少ない</li>
                 <li>そのためテスト環境でサーバー負荷が発生した</li>
               </ul>
@@ -127,9 +127,9 @@
               <div class="card-title">推奨方針</div>
               <ul>
                 <li>Dify はできるだけ専用サーバーに分離する</li>
-                <li>次の移行先として ConoHa VPS を推奨</li>
-                <li>Sakura / ConoHa ともに Dify 用 startup script がある</li>
-                <li>実運用では 8GB 以上を目安にしたい</li>
+                <li>次の移行先として XServer VPS を推奨</li>
+                <li>Sakura では startup script、XServer では Dify アプリイメージが利用できる</li>
+                <li>テスト用の Dify であれば 6GB 構成で問題ありません。本番運用を見据える場合は 12GB 構成を想定するのが望ましいです</li>
               </ul>
             </div>
           </div>
@@ -150,7 +150,7 @@
               <div class="card-title">参考リンク</div>
               <ul>
                 <li>Sakura: Dify 用 startup script</li>
-                <li>ConoHa: Dify 用 startup script</li>
+                <li>XServer: Dify アプリイメージ</li>
                 <li>Dify: self-host 公式ドキュメント</li>
               </ul>
             </div>
@@ -161,9 +161,9 @@
               <div class="link-title">Sakura VPS: Dify startup script</div>
               <div class="link-url">manual.sakura.ad.jp/vps/startupscript/dify.html</div>
             </a>
-            <a class="link-card" href="https://doc.conoha.jp/products/vps-v3/startupscripts-v3/dify/" target="_blank" rel="noreferrer">
-              <div class="link-title">ConoHa VPS: Dify startup script</div>
-              <div class="link-url">doc.conoha.jp/products/vps-v3/startupscripts-v3/dify/</div>
+            <a class="link-card" href="https://vps.xserver.ne.jp/dify.php" target="_blank" rel="noreferrer">
+              <div class="link-title">XServer VPS: Dify アプリイメージ</div>
+              <div class="link-url">vps.xserver.ne.jp/dify.php</div>
             </a>
             <a class="link-card" href="https://docs.dify.ai/getting-started/install-self-hosted/docker-compose" target="_blank" rel="noreferrer">
               <div class="link-title">Dify: self-host with Docker Compose</div>
