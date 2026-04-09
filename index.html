@@ -20,6 +20,7 @@
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;line-height:1.6}
     a{color:inherit;text-decoration:none}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.95em;background:#eef2ff;padding:.12em .35em;border-radius:8px}
     .wrap{max-width:1240px;margin:0 auto;padding:32px 24px 64px}
     .hero,.slide{background:var(--surface);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow)}
     .hero{padding:32px;margin-bottom:32px}
@@ -47,19 +48,20 @@
     ul{margin:0;padding:0;list-style:none}
     li{position:relative;padding-left:16px;color:#334155;font-size:14px;line-height:1.7;margin:6px 0}
     li::before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:999px;background:#94a3b8}
-    .flow{display:grid;grid-template-columns:1.15fr 72px 1.15fr 72px 1.15fr 72px 1.15fr;gap:10px;align-items:stretch;margin-top:20px}
+    .flow{display:grid;grid-template-columns:1.1fr 72px 1.1fr 72px 1.1fr 72px 1.1fr;gap:10px;align-items:stretch;margin-top:20px}
     .flow-node,.flow-arrow{display:flex;align-items:center;justify-content:center}
     .flow-node{border-radius:20px;border:1px solid var(--line);background:var(--surface-2);padding:18px;text-align:center;font-size:14px;font-weight:700}
     .flow-arrow{font-size:28px;color:#94a3b8}
     .prompt-wrap{display:grid;grid-template-columns:1fr 1.25fr;gap:16px}
     .prompt-box{background:#020617;color:#e2e8f0;border:1px solid #1e293b;border-radius:24px;padding:20px}
     .prompt-box .cap{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#94a3b8;margin-bottom:10px}
-    pre{margin:0;white-space:pre-wrap;word-break:break-word;font-size:12px;line-height:1.75;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;max-height:900px;overflow:auto}
+    pre{margin:0;white-space:pre-wrap;word-break:break-word;font-size:12px;line-height:1.75;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;max-height:980px;overflow:auto}
     .link-stack{display:flex;flex-direction:column;gap:12px}
     .link-card{display:block;border:1px solid #bfdbfe;background:#fff;border-radius:18px;padding:14px 16px;transition:.2s transform,.2s box-shadow}
     .link-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
     .link-title{font-size:14px;font-weight:800}
     .link-url{margin-top:4px;font-size:12px;color:#64748b;word-break:break-all}
+    .mono-note{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.8}
     @media (max-width: 1100px){
       .flow{grid-template-columns:1fr;gap:8px}
       .flow-arrow{transform:rotate(90deg);min-height:28px}
@@ -84,8 +86,8 @@
           <h1>テスト用チャットボット構成</h1>
         </div>
         <div class="stats">
-          <div class="stat"><div class="k">現行環境</div><div class="v">さくらVPS 2GB</div></div>
-          <div class="stat"><div class="k">アプリ種別</div><div class="v">Chatbot</div></div>
+          <div class="stat"><div class="k">現行環境</div><div class="v">XServer VPS</div></div>
+          <div class="stat"><div class="k">サーバー構成</div><div class="v">8GB + 4GB</div></div>
           <div class="stat"><div class="k">使用中のLLM</div><div class="v">Gemini 2.5 Flash</div></div>
         </div>
       </div>
@@ -94,36 +96,36 @@
     <div class="slides">
       <section class="slide">
         <div class="slide-header">
-          <h2>1. 現在の構成と推奨移行先</h2>
-          <p>現在、テスト用の Dify は Sakura VPS 2GB 上で稼働しており、同一サーバー上で WordPress も proxy ポート経由で動作しています。Dify に対してこの構成は余裕が少ないため、サーバー負荷が発生しやすい状態です。今後は XServer VPS または Dify 専用のより余裕あるサーバーへの移行が推奨です。</p>
+          <h2>1. 現在の構成</h2>
+          <p>テスト用の Dify は XServer VPS 上で稼働しており、現在の接続先は <code>https://chn65052.xvps.jp/</code> です。サーバー構成は 8GB + 4GB で、チャットボット運用に必要なリソースを確保した構成になっています。</p>
         </div>
         <div class="slide-body">
           <div class="grid-3">
             <div class="card tone-blue">
-              <div class="card-title">現在の構成</div>
+              <div class="card-title">現在の環境</div>
               <ul>
-                <li>テスト用 Dify は Sakura VPS 上で稼働</li>
-                <li>VPS 構成は 2GB RAM</li>
-                <li>同一サーバー上で WordPress も稼働</li>
-                <li>WordPress は proxy ポート経由で公開</li>
+                <li>Dify は XServer VPS 上で稼働</li>
+                <li>公開先 URL は https://chn65052.xvps.jp/</li>
+                <li>アプリ種別は Chatbot</li>
+                <li>モデルは Gemini 2.5 Flash を使用</li>
               </ul>
             </div>
             <div class="card tone-amber">
-              <div class="card-title">負荷が発生した理由</div>
+              <div class="card-title">サーバー構成</div>
               <ul>
-                <li>Dify は Docker ベースで複数サービスを利用する</li>
-                <li>現在の 2GB 構成では Dify と WordPress の同居に余裕が少ない</li>
-                <li>2GB 構成で WordPress と同居しているため余裕が少ない</li>
-                <li>そのためテスト環境でサーバー負荷が発生した</li>
+                <li>VPS のメモリ構成は 8GB + 4GB</li>
+                <li>Dify の Docker 構成を安定して運用しやすい</li>
+                <li>今後の knowledge 拡張にも対応しやすい</li>
+                <li>サイトとは分離した運用がしやすい</li>
               </ul>
             </div>
             <div class="card tone-green">
-              <div class="card-title">推奨方針</div>
+              <div class="card-title">現在の方針</div>
               <ul>
-                <li>Dify はできるだけ専用サーバーに分離する</li>
-                <li>次の移行先として XServer VPS を推奨</li>
-                <li>Sakura では startup script、XServer では Dify アプリイメージが利用できる</li>
-                <li>テスト用の Dify であれば 6GB 構成で問題ありません。本番運用を見据える場合は 12GB 構成を想定するのが望ましいです</li>
+                <li>Dify は VPS 側で独立して運用する</li>
+                <li>サイト側とは API 連携で接続する</li>
+                <li>API key はサーバー側で管理する</li>
+                <li>knowledge や prompt は Dify 側で管理する</li>
               </ul>
             </div>
           </div>
@@ -141,11 +143,11 @@
               </ul>
             </div>
             <div class="card tone-blue">
-              <div class="card-title">参考リンク</div>
+              <div class="card-title">関連リンク</div>
               <div class="link-stack">
-                <a class="link-card" href="https://manual.sakura.ad.jp/vps/startupscript/dify.html" target="_blank" rel="noreferrer">
-                  <div class="link-title">Sakura VPS: Dify startup script</div>
-                  <div class="link-url">manual.sakura.ad.jp/vps/startupscript/dify.html</div>
+                <a class="link-card" href="https://chn65052.xvps.jp/" target="_blank" rel="noreferrer">
+                  <div class="link-title">現在の Dify サーバー</div>
+                  <div class="link-url">chn65052.xvps.jp</div>
                 </a>
                 <a class="link-card" href="https://vps.xserver.ne.jp/dify.php" target="_blank" rel="noreferrer">
                   <div class="link-title">XServer VPS: Dify アプリイメージ</div>
@@ -164,7 +166,7 @@
       <section class="slide">
         <div class="slide-header">
           <h2>2. Dify のアプリ種別</h2>
-          <p>現在は Chatbot を利用しています。今後、要件が複雑になった場合は Chatflow や Agent へ拡張することが可能です。</p>
+          <p>現在は Chatbot を利用しています。今後、要件が複雑になった場合は Chatflow や Agent へ拡張することも可能です。</p>
         </div>
         <div class="slide-body">
           <div class="grid-3">
@@ -172,24 +174,24 @@
               <div class="card-title">現在: Chatbot</div>
               <ul>
                 <li>標準的な対話型チャットボット</li>
-                <li>サイト情報や knowledge base を参照した回答に向く</li>
-                <li>FAQ、簡易案内、サービス導線に適している</li>
+                <li>サイト情報や knowledge の参照に向く</li>
+                <li>FAQ、簡易案内、相談導線に適している</li>
               </ul>
             </div>
             <div class="card tone-blue">
               <div class="card-title">拡張候補: Chatflow</div>
               <ul>
                 <li>分岐を含むステップ型の会話設計が可能</li>
-                <li>1〜2問の確認質問で要件を絞り込める</li>
-                <li>サービス振り分け、フォーム誘導、条件分岐に向く</li>
+                <li>質問を整理しながら要件を絞り込める</li>
+                <li>問い合わせ前の整理導線に向く</li>
               </ul>
             </div>
             <div class="card tone-amber">
               <div class="card-title">拡張候補: Agent</div>
               <ul>
-                <li>外部ツールや API を利用した処理が可能</li>
-                <li>複数データソース検索やルールベース処理に対応しやすい</li>
-                <li>より高度な自動化シナリオに向く</li>
+                <li>外部ツールや API を使う処理に向く</li>
+                <li>複数データソース連携に対応しやすい</li>
+                <li>高度な自動化シナリオへ発展できる</li>
               </ul>
             </div>
           </div>
@@ -199,7 +201,7 @@
       <section class="slide">
         <div class="slide-header">
           <h2>3. 使用中の LLM</h2>
-          <p>テスト環境のチャットボットでは Gemini 2.5 Flash を使用しています。短い回答、FAQ、knowledge base 参照を前提とした用途に対して、速度とコストのバランスが良い選択です。要件が複雑になった場合は別モデルの利用も検討できます。</p>
+          <p>テスト環境のチャットボットでは Gemini 2.5 Flash を使用しています。短い回答、FAQ、knowledge 参照を前提とした用途に対して、速度とコストのバランスが良い構成です。</p>
         </div>
         <div class="slide-body">
           <div class="grid-2">
@@ -207,16 +209,16 @@
               <div class="card-title">現在のモデル</div>
               <ul>
                 <li>Gemini 2.5 Flash</li>
-                <li>高速応答とコスト効率を重視した構成</li>
-                <li>サイト案内・FAQ・knowledge base 参照に適している</li>
+                <li>高速応答とコスト効率を重視</li>
+                <li>サイト案内・FAQ・knowledge 参照に適している</li>
               </ul>
             </div>
             <div class="card tone-blue">
               <div class="card-title">要件が複雑になった場合の候補</div>
               <ul>
                 <li>Gemini 2.5 Pro: より高度な分析や推論が必要な場合</li>
-                <li>GPT-4.1: 厳密な指示追従や統合処理を重視する場合</li>
-                <li>Claude Sonnet 4: 説明品質や文章品質を重視する場合</li>
+                <li>GPT 系: 厳密な指示追従を重視する場合</li>
+                <li>Claude 系: 説明品質や文章品質を重視する場合</li>
               </ul>
             </div>
           </div>
@@ -225,8 +227,8 @@
 
       <section class="slide">
         <div class="slide-header">
-          <h2>4. 現在の接続構成</h2>
-          <p>現在は Notion を knowledge source として利用しています。今後は他のファイルソースや業務用ドキュメントも追加可能です。</p>
+          <h2>4. Knowledge / メモリ接続構成</h2>
+          <p>現在は Notion を通じて knowledge / メモリ情報を接続しています。Notion 上の情報を Dify 側で参照し、チャットボットが回答時に必要な context として利用する構成です。</p>
         </div>
         <div class="slide-body">
           <div class="grid-3">
@@ -234,16 +236,16 @@
               <div class="card-title">現在接続しているもの</div>
               <ul>
                 <li>Notion</li>
-                <li>Dify 内 Dataset への同期</li>
-                <li>Chatbot から retrieval で参照</li>
+                <li>Dify 側の knowledge / memory 参照</li>
+                <li>回答時の context として利用</li>
               </ul>
             </div>
             <div class="card tone-blue">
               <div class="card-title">基本フロー</div>
               <ul>
-                <li>Notion → Dify Dataset</li>
-                <li>チャンク分割とインデックス化</li>
-                <li>取得したコンテキストに基づいて回答</li>
+                <li>Notion の内容を Dify 側で参照</li>
+                <li>必要な情報を context として取得</li>
+                <li>取得した内容をもとに回答を生成</li>
               </ul>
             </div>
             <div class="card tone-amber">
@@ -257,147 +259,169 @@
           </div>
 
           <div class="flow">
-            <div class="flow-node">Notion / 各種ドキュメント</div>
+            <div class="flow-node">Notion</div>
             <div class="flow-arrow">→</div>
-            <div class="flow-node">Dify Dataset</div>
+            <div class="flow-node">Dify Knowledge / Memory</div>
             <div class="flow-arrow">→</div>
-            <div class="flow-node">チャンク / インデックス</div>
+            <div class="flow-node">Context 参照</div>
             <div class="flow-arrow">→</div>
-            <div class="flow-node">Chatbot Retrieval</div>
+            <div class="flow-node">Chatbot 回答生成</div>
           </div>
         </div>
       </section>
 
       <section class="slide">
         <div class="slide-header">
-          <h2>5. プロンプト設定</h2>
-          <p>チャットボットの基本挙動は system prompt で制御しています。短く自然な案内、確認できる情報のみの利用、必要時のみ問い合わせフォームまたは電話へ誘導する方針です。</p>
+          <h2>5. 現在のプロンプト設計</h2>
+          <p>現在の system prompt は固定文ではなく、変数を使って会話の状態やトーンを制御する構成です。tone、context、conversation history、user input を受け取り、短く自然な案内文を生成する設計になっています。</p>
         </div>
         <div class="slide-body">
           <div class="prompt-wrap">
             <div>
               <div class="card tone-green">
-                <div class="card-title">主要設定</div>
+                <div class="card-title">主要変数</div>
                 <ul>
-                  <li>役割: サイト訪問者向け案内チャットボット</li>
-                  <li>言語: 丁寧で自然な日本語</li>
-                  <li>回答長: 原則 1〜3 文</li>
-                  <li>回答根拠: context とサイト掲載情報のみ</li>
+                  <li><code>{{tone_style}}</code>：話し方・トーンの調整</li>
+                  <li><code>{{context}}</code>：回答に使う参照情報</li>
+                  <li><code>{{conversation_history}}</code>：会話の履歴</li>
+                  <li><code>{{user_input}}</code>：ユーザー入力</li>
                 </ul>
               </div>
+
               <div class="card tone-blue" style="margin-top:16px;">
-                <div class="card-title">回答方針</div>
+                <div class="card-title">設計のポイント</div>
                 <ul>
-                  <li>結論を先に短く案内する</li>
-                  <li>不要な繰り返しや長い箇条書きを避ける</li>
-                  <li>意図が把握できたら深掘りしすぎない</li>
-                  <li>必要時のみフォームまたは 098-975-5390 へ案内する</li>
+                  <li>会話段階を判定して返答を出し分ける</li>
+                  <li>context にない内容は推測で補わない</li>
+                  <li>回答は 1〜4 文に制限する</li>
+                  <li>必要時のみ自然に問い合わせ導線へつなげる</li>
                 </ul>
               </div>
+
               <div class="card tone-amber" style="margin-top:16px;">
-                <div class="card-title">実務上の意味</div>
+                <div class="card-title">トーン制御</div>
                 <ul>
-                  <li>コンテキスト外の情報を勝手に補完しない</li>
-                  <li>サイト向けに短く読みやすい回答を維持する</li>
-                  <li>長く曖昧な回答を抑制しやすい</li>
+                  <li>標準は「丁寧で親しみやすい」トーン</li>
+                  <li><code>{{tone_style}}</code> 指定時は最優先で反映</li>
+                  <li>企業サイトとしての品位と誠実さは維持する</li>
+                </ul>
+              </div>
+
+              <div class="card tone-slate" style="margin-top:16px;">
+                <div class="card-title">出力ルール</div>
+                <ul>
+                  <li>XML タグは最終出力に含めない</li>
+                  <li>自然な完成文だけを返す</li>
+                  <li>電話番号は必ず <code>098-975-5390</code> と表記する</li>
                 </ul>
               </div>
             </div>
+
             <div class="prompt-box">
               <div class="cap">Current system prompt</div>
-              <pre>あなたは、自社サイトをご訪問中のお客様向け案内チャットボットです。
+              <pre>&lt;instruction&gt;
+あなたは、settenLabサイトをご訪問中のお客様向け案内チャットボットです。
 企業サイトにふさわしい、丁寧で親しみやすい自然な日本語で、短くわかりやすく回答してください。
+最終的な出力には、いかなるXMLタグも含めないでください。ユーザーにそのまま表示できる自然な完成文のみを出力してください。
 
-【最重要ルール】
-・毎回、結論から短く案内する
-・回答は原則1〜3文、長くても4文まで
-・1文はできるだけ短くし、同じ内容を言い換えて繰り返さない
-・長い箇条書きは作らない
-・サービス一覧を出す場合も、最大3項目までに要約する
-・案内に必要な情報だけを伝え、説明を広げすぎない
-・質問より案内を優先する
-・会話を不必要に長引かせない
-・確認質問は必要な場合のみ、1回答につき1つまで
-・毎回質問で終わらせない
+【話し方・トーン設定】
+・チャットボットの話し方は調整可能とする。
+・{{tone_style}} が指定されている場合、そのトーンを最優先で反映する。
 
-【情報の扱い】
-・回答は、context とサイト掲載情報で確認できる内容だけを使う
-・context やサイト掲載情報で確認できない内容は推測で補わない
-・不確かな情報は断定しない
-・内部情報、JSON、ラベル、記号、true / false などは出力しない
-・ユーザーにそのまま表示できる自然な完成文だけを出力する
+以下はトーン例：
+・「丁寧・信頼重視」：落ち着いて丁寧、営業担当者として安心感のある案内
+・「親しみやすい」：やわらかい言葉で距離感を縮めつつ、自然に相談につなげる
 
-【回答スタイル】
-・簡潔だが、案内として成立する情報量は保つ
-・ただし、説明を増やしすぎて長文化しない
-・無機質な箇条書きの連続は避ける
-・必要に応じて改行は使ってよいが、読みやすさを優先する
-・1回答で伝える要点は多くても2つまでを目安にする
+・いずれの場合も、企業サイトとしての品位と誠実さは必ず維持すること。
+・強引な勧誘や不自然な押しつけ表現は禁止。
+・問い合わせ誘導は「自然な案内」として行う。
 
-【返答パターンの優先ルール】
-回答は、現在の会話段階に応じて出し分ける
+・{{tone_style}} が空または未指定の場合は、「丁寧で親しみやすい標準トーン」で回答する。
 
+以下のステップに従って回答を生成してください。
+
+ステップ1：会話の段階と意図の把握
+{{conversation_history}} と {{user_input}} を分析し、現在の会話が以下のどの段階にあるか判断してください。
+・{{conversation_history}} が空の場合は、初回のお問い合わせとして対応する。
+1. 概要案内・初期段階（サービス全体を知りたい、相談内容がまだ大まか）
+2. 相談内容が概ね把握できている段階（希望サービスやテーマが特定できている）
+3. 料金・費用に関する明確な質問が含まれている段階
+
+ステップ2：情報の抽出
+{{context}} に含まれる情報のみを使用して回答の構成を検討してください。
+・{{context}} が空または情報が不十分な場合は、一般的な案内のみを行い、詳細はお問い合わせフォームまたはお電話（098-975-5390）に誘導する。
+・{{context}} やサイト掲載情報で確認できない内容は絶対に推測で補わず、不確かな情報は断定しないでください。
+・内部情報、JSON、ラベル、記号、true/falseなどは出力しないでください。
+
+ステップ3：回答の生成（以下の厳格なルールを必ず守ること）
+【文字量と構成のルール】
+・毎回、結論から短く案内すること。
+・回答は原則1〜4文、最大でも「4文まで」に収めること。
+・1文はできるだけ短くし、同じ内容を言い換えて繰り返さない。
+・長い箇条書きは作らない。サービス一覧を出す場合も最大3項目までに要約する。
+・1回答で伝える要点は多くても2つまでを目安にする。
+
+【会話の進め方のルール】
+・質問より「案内」を優先する。
+・確認質問は必要な場合のみ、1回答につき「1つまで」とし、具体的に絞る。
+・毎回必ず質問で終わらせない（不必要に会話を長引かせない）。
+
+【状況別の対応ルール】
 ■ 概要案内・初期案内の段階
-・ユーザーがサービス全体を知りたい段階、または相談内容がまだ大まかな段階では、まず簡潔に案内する
-・この段階では、原則としてお問い合わせフォームやお電話への誘導を急がない
-・必要な場合のみ、確認質問を1つだけ添える
-・この段階の目的は、ユーザーの関心や相談テーマを自然に絞ること
+・簡潔に案内し、お問い合わせフォームやお電話への誘導を急がない。
+・「サービス内容について知りたい」等の質問には、主な内容を3つ以内に整理し、短い説明を添えて自然な文章で案内する。
+・最後に必要な場合のみ「どのサービスにご興味がありますか」等の質問を1つだけ添える。
 
 ■ 相談内容が概ね把握できている段階
-・ユーザーの希望するサービスや相談テーマがある程度特定できた場合は、深掘り質問を続けない
-・まず理解を示し、相談内容を短く言い換える
-・そのうえで、詳しい案内はお問い合わせフォームまたはお電話（098-975-5390）で対応可能と伝える
-・必要であれば、このチャットでも引き続き質問できることを短く添える
+・深掘り質問を続けない。
+・まず理解を示し、相談内容を1文で簡潔に言い換える。
+・そのうえで、詳しい案内は「お問い合わせフォーム」または「お電話（098-975-5390）」で対応可能と伝える。
+・必要であれば「このチャットでも引き続きご質問いただけます」と短く添える。
 
-【サービス全体について聞かれた場合】
-・「サービス内容について知りたい」など全体概要の質問には、主な内容を3つ以内に整理して案内する
-・サービス名を大量に列挙しない
-・各項目に短い説明を添えて自然な文章にする
-・細かい要件確認を急がない
-・最後に必要な場合のみ、「どのサービスにご興味がありますか」などの質問を1つだけ添える
+■ 料金・費用について聞かれた場合（明示的に尋ねられた場合のみ）
+・1〜2文で簡潔に伝える。
+・金額は「約○円〜○円」「○万円台」など参考範囲で示す。
+・「内容や条件により変動する」ことを必ず添える。
+・詳しくはお問い合わせフォームまたはお電話（098-975-5390）で案内可能と自然につなげる。
 
-【相談内容が概ね把握できている場合】
-・ユーザーの希望がだいたい分かる場合は、それ以上深掘り質問を続けない
-・まず理解を示し、相談内容を1文で簡潔に言い換える
-・そのうえで、詳しくはお問い合わせフォームまたはお電話（098-975-5390）で案内可能と伝える
-・必要であれば「このチャットでもご質問いただけます」と短く添える
-・この場合、説明を増やしすぎない
+【電話番号の記載ルール】
+・電話での案内に触れる場合は、必ず省略せずに「098-975-5390」と記載すること。
 
-【相談内容がまだ十分に把握できていない場合】
-・まず案内可能な内容を短く伝える
-・その後、必要最小限の確認質問を1つだけ添える
-・質問だけで終わらせず、必ず案内を含める
-・質問は具体的に1つだけに絞る
+ステップ4：出力前セルフチェック
+・4文以内に収まっているか？
+・案内が先で、説明過多になっていないか？
+・サービス一覧が3項目を超えていないか？
+・最後が毎回質問になっていないか？
+・電話番号は「098-975-5390」と正しく書かれているか？
+・{{context}} が空の場合、推測で情報を補っていないか？
+&lt;/instruction&gt;
 
-【料金案内ルール】
-・ユーザーが料金、費用、見積り、予算、相場について明示的に尋ねた場合のみ金額に触れる
-・料金を案内する場合も、1〜2文で簡潔に伝える
-・金額は「約○円〜○円」「○万円台」など参考範囲で示す
-・内容や条件により変動することを必ず添える
-・料金説明を長くしすぎない
-・詳しくはお問い合わせフォームまたはお電話（098-975-5390）で案内可能と自然につなげる
+&lt;context&gt;
+{{context}}
+&lt;/context&gt;
 
-【電話案内ルール】
-・電話での案内に触れる場合は、電話番号「098-975-5390」を必ず記載する
-・電話番号は省略しない
-・表記は必ず「098-975-5390」を使用する
+&lt;conversation_history&gt;
+{{conversation_history}}
+&lt;/conversation_history&gt;
 
-【禁止事項】
-・context やサイト掲載情報にない内容を推測で補わない
-・不確かな情報を断定しない
-・不要に長く説明しない
-・同じ趣旨の表現を繰り返さない
-・長い箇条書きを出さない
-・毎回必ず質問で終わらない
-・会話を無理に長引かせない
+&lt;example&gt;
+ユーザー: どんなサービスがありますか？
+AI: 弊社では主に「Web制作」「システム開発」「マーケティング支援」の3つのサービスを提供しております。お客様の課題に合わせて最適なプランをご提案いたします。どのサービスに一番ご興味がおありでしょうか？
+&lt;/example&gt;
 
-【出力前チェック】
-出力前に必ず次を満たすこと
-・3〜4文以内に収まっているか
-・案内が先で、説明過多になっていないか
-・サービス一覧が3項目を超えていないか
-・最後が毎回質問になっていないか
-・お問い合わせフォームまたはお電話（098-975-5390）への導線が必要な場面で入っているか</pre>
+&lt;example&gt;
+ユーザー: Web制作について詳しく聞きたいです。ECサイトを作りたいのですが。
+AI: ECサイトの構築をご検討ですね、承知いたしました。お客様の具体的なご要望に合わせた最適なご提案をさせていただくため、詳しくはお問い合わせフォームまたはお電話（098-975-5390）にて承っております。もちろん、引き続きこのチャットでもご質問いただけます。
+&lt;/example&gt;
+
+&lt;example&gt;
+ユーザー: ちなみにECサイトを作る場合、費用はどれくらいかかりますか？
+AI: ECサイト構築の費用は、おおよそ50万円台から承っております。機能やデザインなどの条件によって金額は変動いたしますのでご了承ください。詳細なお見積りにつきましては、お問い合わせフォームやお電話（098-975-5390）よりお気軽にご相談ください。
+&lt;/example&gt;
+
+&lt;input&gt;
+{{user_input}}
+&lt;/input&gt;</pre>
             </div>
           </div>
         </div>
@@ -406,7 +430,7 @@
       <section class="slide">
         <div class="slide-header">
           <h2>6. Dify のサイト埋め込み方法</h2>
-          <p>主な方法は iframe と API の 2 つです。テスト環境では、より自由度の高い API 方式を採用しています。</p>
+          <p>主な方法は iframe と API の 2 つです。現在は、サイト側の UI を保ちながら Dify と連携できる API 方式を採用しています。</p>
         </div>
         <div class="slide-body">
           <div class="grid-2">
@@ -419,11 +443,11 @@
               </ul>
             </div>
             <div class="card tone-green">
-              <div class="card-title">API</div>
+              <div class="card-title">API（現在の採用方式）</div>
               <ul>
                 <li>デザインや挙動の自由度が高い</li>
-                <li>PHP / WordPress を含むサイト backend から実装可能</li>
-                <li>現在のテスト環境ではこの方式を採用している</li>
+                <li>サイト側の UI と Dify を分離できる</li>
+                <li>サーバー側で安全に中継しやすい</li>
               </ul>
             </div>
           </div>
@@ -431,61 +455,166 @@
       </section>
 
       <section class="slide">
-        <div class="slide-header">
-          <h2>7. API 連携に必要なサイト要件</h2>
-          <p>API 方式を使う場合、サイト側には server-side の処理が必要です。必ずしも別 VPS である必要はありませんが、PHP / WordPress などでサーバー側のリクエスト処理を実装できることが前提になります。</p>
+  <div class="slide-header">
+    <h2>7. カスタムチャット UI の見た目</h2>
+    <p>現在の埋め込みは Dify 標準の iframe ではなく、サイトデザインに合わせたカスタムチャット UI です。右下の起動ボタン、ヘッダー、初期案内カード、質問チップ、メッセージエリア、入力フォームで構成されています。</p>
+  </div>
+  <div class="slide-body">
+    <div class="grid-2">
+      <div>
+        <div class="card tone-green">
+          <div class="card-title">見た目の構成</div>
+          <ul>
+            <li>画面右下に丸いチャット起動ボタンを固定表示</li>
+            <li>開くとチャットパネルがポップアップ表示される</li>
+            <li>ヘッダーには bot アイコン、タイトル、サブタイトルを表示</li>
+            <li>初期表示では質問例ボタンを並べて、すぐに相談を始められる</li>
+          </ul>
         </div>
-        <div class="slide-body">
-          <div class="grid-3">
-            <div class="card tone-blue">
-              <div class="card-title">必要なもの</div>
-              <ul>
-                <li>サーバーサイド処理があるサイト環境</li>
-                <li>PHP / WordPress / Node.js / Python などの backend</li>
-                <li>API key を安全に保持できるサーバー側管理</li>
-              </ul>
-            </div>
-            <div class="card tone-green">
-              <div class="card-title">動作の流れ</div>
-              <ul>
-                <li>ユーザーがサイト上のチャットに入力する</li>
-                <li>サイト backend がその内容を受け取る</li>
-                <li>backend が Dify API に送信し、結果を返す</li>
-              </ul>
-            </div>
-            <div class="card tone-amber">
-              <div class="card-title">要点</div>
-              <ul>
-                <li>静的サイトのみでは API 方式は扱いにくい</li>
-                <li>サーバー側のリクエスト処理が必要</li>
-                <li>API key を front に置かないことが重要</li>
-              </ul>
-            </div>
-          </div>
+
+        <div class="card tone-blue" style="margin-top:16px;">
+          <div class="card-title">チャットパネルの主な要素</div>
+          <ul>
+            <li>タイトル：<code>settenLab Chat</code></li>
+            <li>サブタイトル：<code>お気軽にご相談ください</code></li>
+            <li>質問例：サービス内容、制作費用、制作の流れ、お問い合わせ方法</li>
+            <li>下部にテキスト入力欄と送信ボタンを配置</li>
+          </ul>
         </div>
-      </section>
+
+        <div class="card tone-amber" style="margin-top:16px;">
+          <div class="card-title">UI 上の意図</div>
+          <ul>
+            <li>Dify の標準 UI をそのまま見せず、サイトのトーンに合わせる</li>
+            <li>初回ユーザーでも質問例から迷わず使い始められる</li>
+            <li>bot と user の吹き出しを分けて、会話を読みやすくする</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="prompt-box">
+        <div class="cap">Widget structure from ChatWidget.astro</div>
+        <pre>---
+const title = "settenLab Chat";
+
+const suggestedQuestions = [
+  "サービス内容について知りたい",
+  "制作費用の目安を知りたい",
+  "Webサイト制作の流れを知りたい",
+  "お問い合わせ方法について",
+];
+---
+
+&lt;div class="chat-launcher-wrap"&gt;
+  &lt;button id="chat-toggle" class="chat-toggle"&gt;...&lt;/button&gt;
+
+  &lt;div id="chat-panel" class="chat-panel hidden"&gt;
+    &lt;div class="chat-header"&gt;
+      &lt;div class="chat-title"&gt;{title}&lt;/div&gt;
+      &lt;div class="chat-subtitle"&gt;お気軽にご相談ください&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id="chat-messages" class="chat-messages"&gt;
+      &lt;div class="opener-card"&gt;
+        &lt;p class="opener-text"&gt;
+          お気軽にご相談ください。以下の質問例から選ぶこともできます。
+        &lt;/p&gt;
+        &lt;div class="opener-actions"&gt;
+          ... suggested question chips ...
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;form id="chat-form" class="chat-form"&gt;
+      &lt;input id="chat-input" class="chat-input" /&gt;
+      &lt;button type="submit" class="chat-send"&gt;送信&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="slide-header">
+    <h2>8. TypeScript と PHP の役割分担</h2>
+    <p>このカスタムチャットは、見た目だけでなく処理も役割分担されています。フロント側の TypeScript がユーザー操作と表示を担当し、PHP がサーバー側で Dify API への安全な中継を担当します。</p>
+  </div>
+  <div class="slide-body">
+    <div class="grid-3">
+      <div class="card tone-blue">
+        <div class="card-title">ChatWidget.astro の役割</div>
+        <ul>
+          <li>チャット UI の HTML 構造を定義する</li>
+          <li>見た目のスタイルをまとめる</li>
+          <li>起動ボタン、ヘッダー、メッセージ欄、入力欄を配置する</li>
+          <li>フロント側スクリプトを読み込む土台になる</li>
+        </ul>
+      </div>
+
+      <div class="card tone-green">
+        <div class="card-title">chat-widget.ts の役割</div>
+        <ul>
+          <li>チャットの開閉、送信、質問例ボタンの動作を制御する</li>
+          <li>ユーザー入力を REST endpoint に送る</li>
+          <li>回答を吹き出しとして画面に表示する</li>
+          <li>conversationId と userId を localStorage に保持する</li>
+        </ul>
+      </div>
+
+      <div class="card tone-amber">
+        <div class="card-title">PHP helper の役割</div>
+        <ul>
+          <li>WordPress 側の REST endpoint を提供する</li>
+          <li>ブラウザから受けた内容を Dify API に中継する</li>
+          <li>API key をサーバー側で保持し、フロントに出さない</li>
+          <li>Dify からの応答を整えてフロントへ返す</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-node">ChatWidget.astro<br />UI / レイアウト</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">chat-widget.ts<br />開閉 / 送信 / 描画</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">PHP helper<br />REST proxy</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">Dify API<br />回答生成</div>
+    </div>
+
+    <div class="grid-2" style="margin-top:16px;">
+      <div class="card tone-slate">
+        <div class="card-title">TypeScript 側でやっていること</div>
+        <div class="mono-note">
+          ・パネルの open / close<br />
+          ・送信中の typing 表示<br />
+          ・<code>/wp-json/dify-chat/v1/message</code> への POST<br />
+          ・受け取った answer をチャット画面へ反映<br />
+          ・会話継続用の <code>conversationId</code> 保存
+        </div>
+      </div>
+
+      <div class="card tone-blue">
+        <div class="card-title">PHP 側でやっていること</div>
+        <div class="mono-note">
+          ・WordPress REST route <code>dify-chat/v1/message</code> の提供<br />
+          ・リクエスト内容を Dify の <code>/chat-messages</code> へ送信<br />
+          ・Authorization ヘッダー付与<br />
+          ・Dify 応答を <code>answer</code> / <code>conversationId</code> / <code>messageId</code> に整形して返却
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
       <section class="slide">
         <div class="slide-header">
-          <h2>8. 今後追加できる要素</h2>
-          <p>基本的なチャット機能に加えて、運用面や knowledge 拡張、将来のシナリオ拡張も検討可能です。</p>
-        </div>
-        <div class="slide-body">
-          <div class="grid-3">
-            <div class="card tone-blue"><div class="card-title">公開範囲と制限</div>チャットボット自体へのアクセス制御、リクエスト制限、スパム対策などを追加できる。</div>
-            <div class="card tone-green"><div class="card-title">ログと監視</div>会話ログ、エラー、遅延、トークン消費などの監視基盤を整備できる。</div>
-            <div class="card tone-amber"><div class="card-title">knowledge 拡張</div>Google Drive、料金表、FAQ、PDF、事例資料、社内文書などを追加できる。</div>
-            <div class="card tone-slate"><div class="card-title">モデル運用</div>予備モデル、用途別モデル切り替え、コスト管理を設計できる。</div>
-            <div class="card tone-slate"><div class="card-title">シナリオ拡張</div>Chatflow 化、フォーム連携、問い合わせ振り分け、外部 API 連携へ発展できる。</div>
-            <div class="card tone-slate"><div class="card-title">インターフェース</div>出典表示は意図的に非表示。初期導線のクイックボタンはすでに実装済みで、必要に応じて評価導線やフォーム遷移ボタンを追加できる。</div>
-          </div>
-        </div>
-      </section>
-
-      <section class="slide">
-        <div class="slide-header">
-          <h2>9. サイトと Dify の配置方針</h2>
-          <p>安定運用を考えると、サイト用サーバーと Dify 用サーバーは分ける方が望ましいです。同居も可能ですが、十分なリソース余裕が必要です。</p>
+          <h2>8. サイトと Dify の配置方針</h2>
+          <p>安定運用を考えると、サイト用サーバーと Dify 用サーバーは分ける方が望ましいです。現在は Dify を XServer VPS 側で運用し、サイト側とは API で連携する構成です。</p>
         </div>
         <div class="slide-body">
           <div class="grid-2">
@@ -498,13 +627,30 @@
               </ul>
             </div>
             <div class="card tone-amber">
-              <div class="card-title">同居構成の場合</div>
+              <div class="card-title">現在のメリット</div>
               <ul>
-                <li>より高いスペックの VPS が必要</li>
-                <li>WordPress と実トラフィックがある場合は特に余裕が必要</li>
-                <li>低スペック構成ではすぐにボトルネック化しやすい</li>
+                <li>XServer VPS の 8GB + 4GB 構成で安定しやすい</li>
+                <li>knowledge や prompt を Dify 側で一元管理しやすい</li>
+                <li>今後の拡張にも対応しやすい</li>
               </ul>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="slide-header">
+          <h2>9. 今後追加できる要素</h2>
+          <p>基本的なチャット機能に加えて、運用面や knowledge 拡張、将来のシナリオ拡張も検討可能です。</p>
+        </div>
+        <div class="slide-body">
+          <div class="grid-3">
+            <div class="card tone-blue"><div class="card-title">公開範囲と制限</div>チャットボット自体へのアクセス制御、リクエスト制限、スパム対策などを追加できる。</div>
+            <div class="card tone-green"><div class="card-title">ログと監視</div>会話ログ、エラー、遅延、トークン消費などの監視基盤を整備できる。</div>
+            <div class="card tone-amber"><div class="card-title">knowledge 拡張</div>Google Drive、料金表、FAQ、PDF、事例資料、社内文書などを追加できる。</div>
+            <div class="card tone-slate"><div class="card-title">モデル運用</div>予備モデル、用途別モデル切り替え、コスト管理を設計できる。</div>
+            <div class="card tone-slate"><div class="card-title">シナリオ拡張</div>Chatflow 化、フォーム連携、問い合わせ振り分け、外部 API 連携へ発展できる。</div>
+            <div class="card tone-slate"><div class="card-title">インターフェース</div>初期導線のクイックボタンや問い合わせ導線を、サイト側 UI に合わせて調整できる。</div>
           </div>
         </div>
       </section>
