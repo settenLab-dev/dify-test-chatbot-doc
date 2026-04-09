@@ -611,32 +611,6 @@ const suggestedQuestions = [
 
 
 
-      <section class="slide">
-        <div class="slide-header">
-          <h2>8. サイトと Dify の配置方針</h2>
-          <p>安定運用を考えると、サイト用サーバーと Dify 用サーバーは分ける方が望ましいです。現在は Dify を XServer VPS 側で運用し、サイト側とは API で連携する構成です。</p>
-        </div>
-        <div class="slide-body">
-          <div class="grid-2">
-            <div class="card tone-green">
-              <div class="card-title">推奨: 分離構成</div>
-              <ul>
-                <li>サイトと Dify が CPU / RAM を奪い合いにくい</li>
-                <li>個別に更新・再起動しやすい</li>
-                <li>チャット側の負荷が本体サイトへ波及しにくい</li>
-              </ul>
-            </div>
-            <div class="card tone-amber">
-              <div class="card-title">現在のメリット</div>
-              <ul>
-                <li>XServer VPS の 8GB + 4GB 構成で安定しやすい</li>
-                <li>knowledge や prompt を Dify 側で一元管理しやすい</li>
-                <li>今後の拡張にも対応しやすい</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section class="slide">
         <div class="slide-header">
